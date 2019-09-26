@@ -2,57 +2,31 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import MapView from 'react-native-maps';
 
-  var options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
   
-  function success(pos) {
-    var crd = pos.coords;
-  
-    // console.log('Your current position is:');
-    // console.log(`Latitude : ${crd.latitude}`);
-    // console.log(`Longitude: ${crd.longitude}`);
-    // console.log(`More or less ${crd.accuracy} meters.`);
+export default async function GetCurrentLocation(){
+    const pos = {latitude: 0, longitude:0}
 
-    console.log(crd, ' are the results of fetching the current position')
-    return crd
-  }
-  
-  function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-  
-export default function GetCurrentLocation(){
-    // let x = await navigator.geolocation.getCurrentPosition(success, error, options);
-    // // console.log(x, 'x is')
-    // return await x
-    return navigator.geolocation.getCurrentPosition(success, error, options);
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+      }
+
+    function success(position) {
+        const latitude  = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        pos.latitude = latitude
+        pos.longitude = longitude
+        console.log(pos, 'position is')
+      }
+    
+      function error() {
+        console.log('Unable to retrieve your location');
+      }
+    
+      navigator.geolocation.getCurrentPosition(success, error);
+      await sleep(2000)
+      console.log(pos, 'POSITION AFTER DELAY')
+      //this.setState({latitude: pos.latitude, longitude: pos.longitude})
+      return pos;
+
     
 }
-
-//   let crd = navigator.geolocation.getCurrentPosition(success, error, options);
-//let crd = {latitude: 40.7751353, longitude: -73.9266018}
-
-//   export default class GetCurrentLocation extends Component {
-//     componentDidMount() {
-
-//     }
-  
-//     render() {
-//       return (
-          
-//           <MapView
-//           initialRegion={{
-//             latitude: crd.latitude,
-//             longitude: crd.longitude,
-//             latitudeDelta: 0.0922,
-//             longitudeDelta: 0.0421,
-//           }}
-//         />
-      
-  
-//       );
-//     }
-//   }
