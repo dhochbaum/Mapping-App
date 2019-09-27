@@ -16,7 +16,7 @@ export default class MapLine extends Component {
     return (
         <Polyline
                 coordinates={this.props.history}
-                strokeColor="#000" 
+                strokeColor="#FFFF01" 
                 strokeWidth={6}
             />
 
