@@ -34,6 +34,7 @@ export default function App() {
       {/* <Text>a</Text> */}
       
         <Map />
+        <NavBar />
       {/* <NavBar /> */}
 
       </View>

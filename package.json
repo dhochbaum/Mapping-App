@@ -8,13 +8,25 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-brands-svg-icons": "^5.11.2",
+    "@fortawesome/free-regular-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/pro-light-svg-icons": "^5.11.2",
+    "@fortawesome/pro-regular-svg-icons": "^5.11.2",
+    "@fortawesome/pro-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-native-fontawesome": "^0.1.0",
+    "babel-plugin-inline-import": "^3.0.0",
     "expo": "^35.0.0",
     "expo-permissions": "~7.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native-fontawesome": "^7.0.0",
     "react-native-geolocation-service": "^3.1.0",
+    "react-native-google-static-map": "^0.1.13",
     "react-native-maps": "~0.25.0",
+    "react-native-svg": "^9.9.6",
     "react-native-unimodules": "^0.7.0-rc.1",
     "react-native-web": "^0.11.7",
     "react-redux": "^7.1.1",
@@ -22,6 +34,7 @@
     "redux-logger": "^3.0.6"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.11.2",
     "babel-preset-expo": "^7.0.0"
   },
   "private": true
