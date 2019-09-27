@@ -5,6 +5,9 @@ import GetCurrentLocation from './GetCurrentLocation'
 import WatchLocation from './WatchLocation'
 // import * as Permissions from 'expo-permissions';
 // import Location from 'expo-permissions'
+import NavBar from './NavBar'
+import store, {increment, recordMove} from './store';
+import {connect} from 'react-redux'
 
 
 
@@ -21,19 +24,21 @@ const styles = StyleSheet.create({
     },
    });
 
-export default class Map extends Component {
+export class DisconnectedMap extends Component {
     constructor(props) {
         super(props);
         // Don't call this.setState() here!
         // this.state = { counter: 0 };
         // this.handleClick = this.handleClick.bind(this);
-        this.state = {
-            latitude: 40.7751353,
-            longitude: -73.9266018,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-            history: []
-          }
+        // this.state = {
+        //     latitude: 40.7751353,
+        //     longitude: -73.9266018,
+        //     latitudeDelta: 0.015,
+        //     longitudeDelta: 0.0121,
+        //     history: []
+        //   }
+        this.state = store.getState();
+
           
       }
       
@@ -61,12 +66,19 @@ export default class Map extends Component {
     //   await sleep(2000)
     //   console.log(pos, 'POSITION AFTER DELAY')
     //   this.setState({latitude: pos.latitude, longitude: pos.longitude})
+        
+
         this.historyCheck = this.historyCheck.bind(this)
         this.getLocationAndSetState = this.getLocationAndSetState.bind(this)
-        this.setState(await GetCurrentLocation())
+        this.recordMove = this.props.recordMove.bind(this)
+        //this.setState(await GetCurrentLocation())
         //this.setState(await WatchLocation())
-        this.historyCheck()
+        //this.historyCheck()
         //WatchLocation()
+        console.log('initial location is', await GetCurrentLocation())
+        const initialLocation = await GetCurrentLocation()
+        this.recordMove(initialLocation)
+
         var myVar = setInterval(this.getLocationAndSetState, 5000);
 
    }
@@ -81,7 +93,7 @@ export default class Map extends Component {
  
   }
 
-  historyCheck() {
+  /* historyCheck() {
       //const checkObject = JSON.stringify({latitude: this.state.latitude, longitude: this.state.longitude});
       //if(!this.state.history.includes(checkObject)) {
     //if(!this.state.history.includes({latitude: this.state.latitude, longitude: this.state.longitude})) {
@@ -99,6 +111,21 @@ export default class Map extends Component {
   async getLocationAndSetState() {
     this.setState(await GetCurrentLocation())
     this.historyCheck()
+  } */
+
+  historyCheck(currentLocation) {
+    console.log(currentLocation)
+    if(!this.state.history.filter( (his) => ((his.latitude===currentLocation.latitude) && (his.longitude===currentLocation.longitude))).length) {
+        console.log('history firing properly')
+        this.recordMove(currentLocation)
+    } else {
+        //console.log('no need to update the history')
+    }
+    console.log(this.props, 'new state')
+  }
+
+  async getLocationAndSetState() {
+    this.historyCheck(await GetCurrentLocation())
   }
 
 
@@ -113,33 +140,25 @@ export default class Map extends Component {
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
         region={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
+          latitude: this.props.latitude,
+          longitude: this.props.longitude,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}
       >
           <Marker 
             coordinate={{
-                latitude: this.state.latitude,
-                longitude: this.state.longitude
+                latitude: this.props.latitude,
+                longitude: this.props.longitude
             }}
           ></Marker>
 
           	<Polyline
-                coordinates={this.state.history}
-                strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-                strokeColors={[
-                    '#7F0000',
-                    '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-                    '#B24112',
-                    '#E5845C',
-                    '#238C23',
-                    '#7F0000'
-                ]}
+                coordinates={this.props.history}
+                strokeColor="#000" 
                 strokeWidth={6}
             />
-
+<NavBar props={this.props} />
       </MapView>
 
     
@@ -147,3 +166,22 @@ export default class Map extends Component {
     );
   }
 }
+
+
+const mapStateToProps = state => {
+  return {
+    latitude: state.latitude,
+    longitude: state.longitude,
+    latitudeDelta: state.latitudeDelta,
+    longitudeDelta: state.longitudeDelta,
+    history: state.history,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    recordMove: latLon => dispatch(recordMove(latLon)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisconnectedMap);
