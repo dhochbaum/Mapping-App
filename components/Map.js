@@ -174,9 +174,13 @@ export class DisconnectedMap extends Component {
               uri="../assets/street-view-duotone.svg"
             /> */}
               {/* <Img href="../assets/street-view-duotone.svg" /> */}
-            
 
           </Marker>
+
+          {this.props.markers.map((marker) => {
+            return <Marker key={marker.latitude+marker.longitude}coordinate={{latitude: marker.latitude, longitude: marker.longitude}}><FontAwesomeIcon icon={ faStarExclamation } color={ 'red' } size={ 32 }/></Marker>
+          })}
+
 
           	{/* <Polyline
                 coordinates={this.props.history}

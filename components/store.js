@@ -50,6 +50,8 @@ const reducer = (state = initialState, action) => {
             history: [...state.history, {latitude: action.newPosition.latitude, longitude: action.newPosition.longitude}]
         }
     case ADD_MARKER:
+        // const newMarker = {latitude: state.latitude, longitude: state.longitude, type: 'faStarExclamation'}
+        // console.log(newMarker, 'new marker')
         return {
             ...state,
             markers: [...state.markers, {latitude: state.latitude, longitude: state.longitude, type: 'faStarExclamation'}]

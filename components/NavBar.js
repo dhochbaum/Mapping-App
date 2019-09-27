@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faStarExclamation } from '@fortawesome/pro-solid-svg-icons'
-import store, {increment, recordMove} from './store';
+import store, {addMarker} from './store';
 import {connect} from 'react-redux'
 
 
@@ -14,7 +14,7 @@ export class DisconnectedNavBar extends Component {
       }
       
   async componentDidMount() {
-
+    this.addMark = this.props.addMark.bind(this)
   }
 
   async componentDidUpdate(prevProps) {
@@ -39,8 +39,8 @@ export class DisconnectedNavBar extends Component {
       //     Navbar goes here
       //     Navbar goes here
       //   </Text>
-        <View>
-          <FontAwesomeIcon icon={ faStarExclamation } color={ 'red' } size={ 64 }/>
+        <View onClick={() => console.log('click') }>
+          <FontAwesomeIcon icon={ faStarExclamation } color={ 'red' } size={ 64 } onPress={() => this.addMark() } />
         <Text>Navbar goes here
         Navbar goes here
         Navbar goes here
@@ -77,7 +77,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // recordMove: latLon => dispatch(recordMove(latLon)),
+    addMark: latLon => dispatch(addMarker()),
   };
 };
 
