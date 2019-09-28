@@ -236,7 +236,7 @@ export class DisconnectedMap extends Component {
         const initialLocation = await GetCurrentLocation()
         this.recordMove(initialLocation)
 
-        var myVar = setInterval(this.getLocationAndSetState, 5000);
+        var myVar = setInterval(this.getLocationAndSetState, 2500);
 
    }
 
@@ -258,10 +258,7 @@ export class DisconnectedMap extends Component {
   }
 
   async getLocationAndSetState() {
-    if(this.props.record) {
-      this.historyCheck(await GetCurrentLocation())
-    }
-    
+    this.historyCheck(await GetCurrentLocation())
   }
 
 

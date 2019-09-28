@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCameraRetro } from '@fortawesome/free-solid-svg-icons'
+import { faCameraRetro, faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons'
 import { faStarExclamation } from '@fortawesome/pro-solid-svg-icons'
-import store, {addMarker} from './store';
+import store, {addMarker, toggleRecordingStatus} from './store';
 import {connect} from 'react-redux'
 import * as FileSystem from 'expo-file-system';
 import * as IntentLauncher from 'expo-intent-launcher';
@@ -19,9 +19,10 @@ export class DisconnectedNavBar extends Component {
       
   async componentDidMount() {
     this.addMark = this.props.addMark.bind(this)
+    this.toggleRecording = this.props.toggleRecording.bind(this)
   }
 
-  async componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) { 
     
   }
   
@@ -64,7 +65,14 @@ export class DisconnectedNavBar extends Component {
 
       //alignItems: 'center'
 
-        <View style={{backgroundColor: 'lightblue', width: 400, alignItems: 'center', justifyContent: 'space-evenly'}}>
+        <View style={{backgroundColor: 'lightblue', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+        {/* <View style={{backgroundColor: 'lightblue', width: 400, alignItems: 'center', justifyContent: 'space-evenly'}}> */}
+          {
+            this.props.record ? 
+            <FontAwesomeIcon icon={ faPauseCircle } color={ 'green' } size={ 64 } onPress={() => this.toggleRecording() } /> :
+            <FontAwesomeIcon icon={ faPlayCircle } color={ 'green' } size={ 64 } onPress={() => this.toggleRecording() } />  
+          }
+          {/* <FontAwesomeIcon icon={ faPlayCircle } color={ 'green' } size={ 64 } onPress={() => this.toggleRecording() } /> */}
           <FontAwesomeIcon icon={ faStarExclamation } color={ 'red' } size={ 64 } onPress={() => this.addMark() } />
           <FontAwesomeIcon icon={ faCameraRetro } color={ 'blue' } size={ 64 } onPress={() => {
             FileSystem.downloadAsync(
@@ -85,7 +93,8 @@ export class DisconnectedNavBar extends Component {
                 console.error(error);
               });            
           } } />
-          <Image source={{uri: 'https://maps.googleapis.com/maps/api/staticmap?path=color:0x0000ff%7Cweight:5%7C40.737102,-73.990318%7C40.749825,-73.987963%7C40.752946,-73.987384%7C40.755823,-73.986397&size=512x512&key=AIzaSyCp0hJflAdfSvstv5oARSri8OWbbc6y3DM'}} />
+
+          {/* <Image source={{uri: 'https://maps.googleapis.com/maps/api/staticmap?path=color:0x0000ff%7Cweight:5%7C40.737102,-73.990318%7C40.749825,-73.987963%7C40.752946,-73.987384%7C40.755823,-73.986397&size=512x512&key=AIzaSyCp0hJflAdfSvstv5oARSri8OWbbc6y3DM'}} />
           <Image
           style={{ width: 250, height: 250 }}
           source={{ uri: staticMapUrl }}
@@ -97,7 +106,7 @@ export class DisconnectedNavBar extends Component {
         <Image
           style={{width: 50, height: 50}}
           source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
-        />
+        /> */}
 
         {/* <Text>Navbar goes here
         Navbar goes here
@@ -136,6 +145,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addMark: latLon => dispatch(addMarker()),
+    toggleRecording: () => dispatch(toggleRecordingStatus())
   };
 };
 
