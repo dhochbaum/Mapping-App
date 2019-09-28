@@ -13,7 +13,6 @@ import { faStreetView } from '@fortawesome/free-solid-svg-icons'
 import { faStarExclamation } from '@fortawesome/pro-solid-svg-icons'
 import MapLine from './MapLine'
 
-const yourLocationImg = require("../assets/street-view-duotone.svg")
 
 
 
@@ -251,12 +250,11 @@ export class DisconnectedMap extends Component {
     if((currentLocation===undefined)||((currentLocation.latitude===0)&&(currentLocation.longitude===0))) { 
       console.log('error fetching location')
     } else if(!this.state.history.filter( (his) => ((his.latitude===currentLocation.latitude) && (his.longitude===currentLocation.longitude))).length) {
-        console.log('history firing properly')
         this.recordMove(currentLocation)
     } else {
         //console.log('no need to update the history')
     }
-    console.log(this.props, 'new state')
+    
   }
 
   async getLocationAndSetState() {
@@ -271,7 +269,12 @@ export class DisconnectedMap extends Component {
 
 
   render() {
-      console.log(this.state, 'this.state')
+      
+
+      const pathColor = "FFFF01"
+      const pathWeight = 6
+      
+      const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?path=color:0x${pathColor}%7C${pathWeight}:5%7C40.737102,-73.990318%7C40.749825,-73.987963%7C40.752946,-73.987384%7C40.755823,-73.986397&size=512x512&key=AIzaSyCp0hJflAdfSvstv5oARSri8OWbbc6y3DM`
       
 
       

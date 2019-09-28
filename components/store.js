@@ -37,12 +37,12 @@ const reducer = (state = initialState, action) => {
     case INCREMENT:
       return { count: state.count + 1 };
     case RECORD_MOVE:
-        console.log('new state should be ', {
-            ...state, 
-            latitude: action.newPosition.latitude,
-            longitude: action.newPosition.longitude,
-            history: [...state.history, {latitude: action.newPosition.latitude, longitude: action.newPosition.longitude}]
-        })
+        // console.log('new state should be ', {
+        //     ...state, 
+        //     latitude: action.newPosition.latitude,
+        //     longitude: action.newPosition.longitude,
+        //     history: [...state.history, {latitude: action.newPosition.latitude, longitude: action.newPosition.longitude}]
+        // })
         return {
             ...state, 
             latitude: action.newPosition.latitude,
