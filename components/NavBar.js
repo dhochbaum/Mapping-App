@@ -66,7 +66,7 @@ export class DisconnectedNavBar extends Component {
 
       //alignItems: 'center'
 
-        <View style={{backgroundColor: 'lightblue', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+        <View style={{backgroundColor: 'lightblue', flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'stretch', height: 80, alignItems: 'center'}}>
         {/* <View style={{backgroundColor: 'lightblue', width: 400, alignItems: 'center', justifyContent: 'space-evenly'}}> */}
           {
             this.props.record ? 
