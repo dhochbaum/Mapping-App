@@ -238,6 +238,7 @@ export class DisconnectedMap extends Component {
 
         var myVar = setInterval(this.getLocationAndSetState, 2500);
 
+
    }
 
   async componentDidUpdate() {
@@ -266,15 +267,7 @@ export class DisconnectedMap extends Component {
 
 
   render() {
-      
-
-      const pathColor = "FFFF01"
-      const pathWeight = 6
-      
-      const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?path=color:0x${pathColor}%7C${pathWeight}:5%7C40.737102,-73.990318%7C40.749825,-73.987963%7C40.752946,-73.987384%7C40.755823,-73.986397&size=512x512&key=AIzaSyCp0hJflAdfSvstv5oARSri8OWbbc6y3DM`
-      
-
-      
+            
     return (
       <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
