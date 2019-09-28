@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, Dimensions } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCameraRetro, faPlayCircle, faPauseCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCameraRetro, faPlayCircle, faPauseCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faStarExclamation } from '@fortawesome/pro-solid-svg-icons'
-import store, {addMarker, toggleRecordingStatus} from './store';
+import store, {addMarker, toggleRecordingStatus, clearHistory} from './store';
 import {connect} from 'react-redux'
 import * as FileSystem from 'expo-file-system';
 import * as IntentLauncher from 'expo-intent-launcher';
@@ -20,6 +20,7 @@ export class DisconnectedNavBar extends Component {
   async componentDidMount() {
     this.addMark = this.props.addMark.bind(this)
     this.toggleRecording = this.props.toggleRecording.bind(this)
+    this.clearHistoryMarkers = this.props.clearHistoryMarkers.bind(this)
   }
 
   async componentDidUpdate(prevProps) { 
@@ -93,7 +94,7 @@ export class DisconnectedNavBar extends Component {
                 console.error(error);
               });            
           } } />
-
+          <FontAwesomeIcon icon={ faTrashAlt } color={ 'red' } size={ 64 } onPress={() => this.clearHistoryMarkers() } />
           {/* <Image source={{uri: 'https://maps.googleapis.com/maps/api/staticmap?path=color:0x0000ff%7Cweight:5%7C40.737102,-73.990318%7C40.749825,-73.987963%7C40.752946,-73.987384%7C40.755823,-73.986397&size=512x512&key=AIzaSyCp0hJflAdfSvstv5oARSri8OWbbc6y3DM'}} />
           <Image
           style={{ width: 250, height: 250 }}
@@ -145,7 +146,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addMark: latLon => dispatch(addMarker()),
-    toggleRecording: () => dispatch(toggleRecordingStatus())
+    toggleRecording: () => dispatch(toggleRecordingStatus()),
+    clearHistoryMarkers: () => dispatch(clearHistory())
   };
 };
 

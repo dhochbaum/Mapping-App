@@ -6,6 +6,7 @@ const INCREMENT = 'INCREMENT';
 const RECORD_MOVE = 'RECORD_MOVE';
 const ADD_MARKER = 'ADD_MARKER'
 const TOGGLE_RECORDING_STATUS = 'TOGGLE_RECORDING_STATUS'
+const CLEAR_HISTORY = 'CLEAR_HISTORY'
 
 // ACTION CREATORS
 export const increment = () => ({
@@ -25,6 +26,9 @@ export const toggleRecordingStatus = () => ({
     type: TOGGLE_RECORDING_STATUS
 });
   
+export const clearHistory = () => ({
+    type: CLEAR_HISTORY
+});
 
 const initialState = {
         latitude: 40.7751353,
@@ -55,11 +59,11 @@ const reducer = (state = initialState, action) => {
                 history: [...state.history, {latitude: action.newPosition.latitude, longitude: action.newPosition.longitude}]
             }
         } else {
-            console.log('recording is paused, but new state should be ', {
-                ...state, 
-                latitude: action.newPosition.latitude,
-                longitude: action.newPosition.longitude,
-            })
+            // console.log('recording is paused, but new state should be ', {
+            //     ...state, 
+            //     latitude: action.newPosition.latitude,
+            //     longitude: action.newPosition.longitude,
+            // })
             return {
                 ...state, 
                 latitude: action.newPosition.latitude,
@@ -78,6 +82,12 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             record: !state.record
+        }
+    case CLEAR_HISTORY:
+        return {
+            ...state,
+            history: [],
+            markers: []
         }
     default:
       return state;
