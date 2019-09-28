@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AwesomeProject",
-    "slug": "AwesomeProject",
+    "name": "Hawk Map Project",
+    "slug": "HawkMapProject",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -11,7 +11,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/hawk.jpeg",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,13 +24,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hawk.hawkmapproject"
     }
   },
   "android": {
+    "package": "com.hawk.hawkmapproject",
     "config": {
       "googleMaps": {
-        "apiKey": "AIzaSyCp0hJflAdfSvstv5oARSri8OWbbc6y3DM"
+        "apiKey": "None"
       }
     }
   }
