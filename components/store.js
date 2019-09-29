@@ -1,5 +1,4 @@
-import {createStore, applyMiddleware} from 'redux';
-import reduxLogger from 'redux-logger';
+import {createStore} from 'redux';
 
 // ACTION TYPES
 const INCREMENT = 'INCREMENT';
@@ -45,12 +44,6 @@ const reducer = (state = initialState, action) => {
     case INCREMENT:
       return { count: state.count + 1 };
     case RECORD_MOVE:
-        // console.log('new state should be ', {
-        //     ...state, 
-        //     latitude: action.newPosition.latitude,
-        //     longitude: action.newPosition.longitude,
-        //     history: [...state.history, {latitude: action.newPosition.latitude, longitude: action.newPosition.longitude}]
-        // })
         if(state.record) {
             return {
                 ...state, 
@@ -59,11 +52,6 @@ const reducer = (state = initialState, action) => {
                 history: [...state.history, {latitude: action.newPosition.latitude, longitude: action.newPosition.longitude}]
             }
         } else {
-            // console.log('recording is paused, but new state should be ', {
-            //     ...state, 
-            //     latitude: action.newPosition.latitude,
-            //     longitude: action.newPosition.longitude,
-            // })
             return {
                 ...state, 
                 latitude: action.newPosition.latitude,
@@ -72,8 +60,6 @@ const reducer = (state = initialState, action) => {
         }
         
     case ADD_MARKER:
-        // const newMarker = {latitude: state.latitude, longitude: state.longitude, type: 'faStarExclamation'}
-        // console.log(newMarker, 'new marker')
         return {
             ...state,
             markers: [...state.markers, {latitude: state.latitude, longitude: state.longitude, type: 'faStarExclamation'}]
@@ -95,6 +81,6 @@ const reducer = (state = initialState, action) => {
 };
 
 const store = createStore(reducer);
-//const store = createStore(reducer, applyMiddleware(reduxLogger));
+
 
 export default store;
